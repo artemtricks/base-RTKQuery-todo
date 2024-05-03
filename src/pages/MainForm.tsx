@@ -1,10 +1,19 @@
 import Layout from "antd/es/layout/layout";
 import React from "react";
 import { Button, Form, Input, DatePicker } from "antd";
+import axios from "axios";
+import { CreateTodo } from "../types/types";
+import { useCreateTodoMutation } from "../services/TodoServices";
 
 type Props = {};
 
-const MainForm = (props: Props) => {
+const MainForm = () => {
+  const [createTodo] = useCreateTodoMutation();
+  const onFinish = (values: CreateTodo) => {
+    //@ts-ignore
+    createTodo({ ...values.task, complited: false });
+  };
+
   const layout = {
     labelCol: {
       span: 8,
@@ -16,10 +25,6 @@ const MainForm = (props: Props) => {
 
   const validateMessages = {
     required: "${label} обязательный параметр!",
-  };
-
-  const onFinish = (values: any) => {
-    console.log(values);
   };
 
   return (

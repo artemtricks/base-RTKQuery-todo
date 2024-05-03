@@ -3,3 +3,7 @@ export type TodoTask = {
   title: string;
   description: string;
 };
+
+export type CreateTodo = {
+  task: TodoTask & { complited: boolean };
+};

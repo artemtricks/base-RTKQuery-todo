@@ -8,6 +8,8 @@ import Task from "./components/Tasks";
 import MainHeader from "./components/Header";
 import { Layout } from "antd";
 import MainForm from "./pages/MainForm";
+import { Provider } from "react-redux";
+import { store } from "./services/store";
 
 const App = () => {
   return (
@@ -52,7 +54,9 @@ const App = () => {
 const AppWithRouts = () => {
   return (
     <BrowserRouter>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>
   );
 };
