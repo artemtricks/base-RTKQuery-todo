@@ -3,9 +3,7 @@ import { Header } from "antd/es/layout/layout";
 import { Link } from "react-router-dom";
 import svgPlus from "../../assets/plus.svg";
 
-type Props = {};
-
-const MainHeader = (props: Props) => {
+const MainHeader = () => {
   return (
     <Header style={{ backgroundColor: "#b5b5b5", borderRadius: 10 }}>
       <div style={{ display: "flex", alignItems: "center" }}>
@@ -18,9 +16,9 @@ const MainHeader = (props: Props) => {
         <Link to={"/"}>
           <Button style={{ marginRight: 10 }}>Все задачи</Button>
         </Link>
-        <Link to={"/complited"}>
+        {/* <Link to={"/complited"}>
           <Button> Выполненные</Button>
-        </Link>
+        </Link> */}
 
         <h1
           style={{

@@ -1,76 +1,34 @@
-import Layout from "antd/es/layout/layout";
 import React from "react";
-import { Button, Form, Input, DatePicker } from "antd";
-import axios from "axios";
+import Layout from "antd/es/layout/layout";
 import { CreateTodo } from "../types/types";
 import { useCreateTodoMutation } from "../services/TodoServices";
-
-type Props = {};
+import FormToAdd from "../components/FormToAdd";
 
 const MainForm = () => {
   const [createTodo] = useCreateTodoMutation();
-  const onFinish = (values: CreateTodo) => {
-    //@ts-ignore
-    createTodo({ ...values.task, complited: false });
-  };
-
-  const layout = {
-    labelCol: {
-      span: 8,
+  const onFinish = React.useCallback(
+    (values: CreateTodo) => {
+      //@ts-ignore
+      createTodo({ ...values.task, complited: false });
     },
-    wrapperCol: {
-      span: 16,
-    },
-  };
-
-  const validateMessages = {
-    required: "${label} обязательный параметр!",
-  };
+    [createTodo]
+  );
 
   return (
     <Layout style={{ height: "100vh", padding: 20, marginTop: 40 }}>
-      <Form
-        {...layout}
-        name="nest-messages"
-        onFinish={onFinish}
+      <h1
         style={{
-          maxWidth: 600,
+          marginTop: 20,
+          marginBottom: 40,
+          textAlign: "center",
+          color: "black",
+          fontWeight: "bold",
+          fontSize: 30,
         }}
-        validateMessages={validateMessages}
       >
-        <Form.Item
-          name={["task", "title"]}
-          label="Заголовок"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name={["task", "description"]}
-          label="Описание"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <Input.TextArea />
-        </Form.Item>
-
-        <Form.Item
-          wrapperCol={{
-            ...layout.wrapperCol,
-            offset: 8,
-          }}
-        >
-          <Button htmlType="submit">Добавить задачу</Button>
-        </Form.Item>
-      </Form>
+        Добавление новой задачи
+      </h1>
+      <FormToAdd onFinish={onFinish} />
     </Layout>
   );
 };

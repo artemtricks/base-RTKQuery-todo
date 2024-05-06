@@ -1,16 +1,13 @@
 import { Button, List, Checkbox } from "antd";
 import React from "react";
 import { TodoTask } from "../types/types";
-import axios from "axios";
 import {
   useDeleteTodoMutation,
   useGetTodoQuery,
 } from "../services/TodoServices";
-type Props = {
-  tasks: TodoTask[];
-};
+import ModalUpdate from "./ModalUpdate";
 
-const Tasks = (props: Props) => {
+const Tasks = () => {
   // const [items, setItems] = React.useState<null | TodoTask[]>(null);
 
   // const fetchTodos = async () => {
@@ -47,21 +44,42 @@ const Tasks = (props: Props) => {
   const [deleteTodo] = useDeleteTodoMutation();
 
   const todosItems: TodoTask[] | [] = !!data && data.length > 0 ? data : [];
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [initialValue, setInitialValue] = React.useState<undefined | TodoTask>(
+    undefined
+  );
+
+  console.log(initialValue, "fefefefefef");
 
   return (
-    <List
-      itemLayout="horizontal"
-      dataSource={todosItems}
-      loading={isLoading}
-      renderItem={(item) => (
-        <List.Item key={item.id}>
-          <Checkbox style={{ marginRight: 10 }} />
-          <List.Item.Meta title={item.title} description={item.description} />
-          <Button style={{ marginRight: 10 }}>Редактировать</Button>
-          <Button onClick={() => deleteTodo(item.id)}>Удалить</Button>
-        </List.Item>
-      )}
-    />
+    <>
+      <List
+        itemLayout="horizontal"
+        dataSource={todosItems}
+        loading={isLoading}
+        renderItem={(item) => (
+          <List.Item key={item.id}>
+            <Checkbox style={{ marginRight: 10 }} />
+            <List.Item.Meta title={item.title} description={item.description} />
+            <Button
+              style={{ marginRight: 10 }}
+              onClick={() => {
+                setInitialValue(item), setIsModalOpen((prev) => !prev);
+              }}
+            >
+              Редактировать
+            </Button>
+            <Button onClick={() => deleteTodo(item.id)}>Удалить</Button>
+          </List.Item>
+        )}
+      />
+      <ModalUpdate
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        initialValue={initialValue}
+        setInitialValue={setInitialValue}
+      />
+    </>
   );
 };
 
